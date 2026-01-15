@@ -1,0 +1,27 @@
+.menu__item {
+  flex: 1;
+  text-align: center;
+  margin-block-start: auto;
+  margin-block-end: auto;
+}
+.menu__item a {
+  color: white;
+  text-decoration: none;
+  letter-spacing: 3px;
+  font-weight: 700;
+}
+.menu__item h1 {
+  background: linear-gradient(to right, #ff7e5f, #feb47b, #fec288);
+  -webkit-background-clip: text;
+  background-clip: text;
+
+  -webkit-text-fill-color: transparent;
+}
+.header menu {
+  display: flex;
+  justify-content: space-between;
+  padding: 0;
+}
+.menu__item__title {
+  font-style: italic;
+}
