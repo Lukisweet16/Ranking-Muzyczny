@@ -1,22 +1,50 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import ReactDOM from "react-dom/client";
-import "./index.css";
+import "./styles/index.css";
 import Layout from "./Common_Components/Layout";
 import reportWebVitals from "./reportWebVitals";
 import LeftAsideAccountInfo from "./Main_Components/LeftAside";
 import TestForm from "./test/FormTestApi";
-
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  RouterProvider,
+} from "react-router-dom";
+import LoginForm from "./Login_Components/LoginForm";
+import Loading from "./Common_Components/Loading";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <Layout>
-      <Layout.Left>
-        <LeftAsideAccountInfo />
-      </Layout.Left>
-      <Layout.Main></Layout.Main>
-      <Layout.Right></Layout.Right>
-    </Layout>
-    <TestForm />
+    <Router>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <Layout>
+              <Layout.Left>
+                <LeftAsideAccountInfo />
+              </Layout.Left>
+              <Layout.Main></Layout.Main>
+              <Layout.Right></Layout.Right>
+            </Layout>
+          }
+        />
+        <Route path="/leaderboard" element={<Layout></Layout>}></Route>
+        <Route
+          path="/login"
+          element={
+            <Layout>
+              <Layout.Main>
+                <Suspense fallback={<Loading />}>
+                  <LoginForm />
+                </Suspense>
+              </Layout.Main>
+            </Layout>
+          }
+        />
+      </Routes>
+    </Router>
   </React.StrictMode>
 );
 

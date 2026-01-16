@@ -1,0 +1,32 @@
+.LoginForm {
+  background-color: black, 0.5;
+  display: flex;
+  width: 70vw;
+  justify-content: center;
+  border-radius: 60px;
+  border: #feb47b 1px;
+  legend {
+    display: block;
+    position: relative;
+    right: -140px;
+  }
+  a {
+    color: #feb47b;
+  }
+  button {
+    border-radius: 40px;
+    margin: 20px;
+    background-color: #ff7e5f;
+  }
+  fieldset {
+    display: flex;
+    width: 30vw;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    border-radius: 60px;
+  }
+}
+.LoginForm > * {
+  color: white;
+}
