@@ -5,14 +5,10 @@ import Layout from "./Common_Components/Layout";
 import reportWebVitals from "./reportWebVitals";
 import LeftAsideAccountInfo from "./Main_Components/LeftAside";
 import TestForm from "./test/FormTestApi";
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  RouterProvider,
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import LoginForm from "./Login_Components/LoginForm";
 import Loading from "./Common_Components/Loading";
+import RegisterForm from "./Register_Components/RegisterForm";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
@@ -43,6 +39,14 @@ root.render(
             </Layout>
           }
         />
+        <Route
+          path="/register"
+          element={
+            <Layout>
+              <RegisterForm />
+            </Layout>
+          }
+        ></Route>
       </Routes>
     </Router>
   </React.StrictMode>

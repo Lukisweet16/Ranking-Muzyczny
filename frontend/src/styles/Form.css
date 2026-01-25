@@ -30,3 +30,6 @@
 .LoginForm > * {
   color: white;
 }
+.errorLogin {
+  color: red;
+}

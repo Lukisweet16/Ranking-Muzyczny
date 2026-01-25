@@ -1,20 +1,19 @@
 import { useCallback, useState } from "react";
 
 import "../styles/Form.css";
-import { Link } from "react-router-dom";
 
-const LoginForm = () => {
+const RegisterForm = () => {
   const [Email, setEmail] = useState("");
   const [Password, setPassword] = useState("");
   const [sendMessage, setSendMessage] = useState("");
-  const HandleLoginData = async (res) => {
+  const HandleRegisterData = async (res) => {
     localStorage.setItem("token", res.token);
     localStorage.setItem("userId", res.userId);
     localStorage.setItem("userEmail", res.userEmail);
   };
   const HandleSubmit = async () => {
     try {
-      const response = await fetch("/login", {
+      const response = await fetch("/register", {
         method: "POST",
         headers: {
           "content-type": "application/json",
@@ -30,7 +29,8 @@ const LoginForm = () => {
       if (!response.ok) {
         throw new Error(data.message || "bład servera");
       } else {
-        HandleLoginData(data);
+        window.location.href = "http://localhost:3000/login";
+        alert("zarejstrowano sie pomyslnie");
       }
     } catch (err) {
       setSendMessage(`${err} - cos poszlo nie tak`);
@@ -41,40 +41,39 @@ const LoginForm = () => {
     }
   };
   return (
-    <div className="LoginForm">
+    <div className="RegisterForm">
+      <div className="errorRegister">
+        <p>{sendMessage}</p>
+      </div>
       <fieldset>
         <h1>Zaloguj się</h1>
 
-        <label htmlFor="emailLogin">E-mail</label>
+        <label htmlFor="emailRegister">E-mail</label>
         <input
           type="email"
-          name="emailLogin"
-          id="emailLogin"
+          name="emailRegister"
+          id="emailRegister"
           value={Email}
           onChange={(e) => {
             setEmail(e.target.value);
           }}
         />
-        <label htmlFor="passwordLogin">Hasło</label>
+        <label htmlFor="passwordRegister">Hasło</label>
         <input
           type="password"
-          name="passwordLogin"
-          id="passwordLogin"
+          name="passwordRegister"
+          id="passwordRegister"
           value={Password}
           onChange={(e) => {
             setPassword(e.target.value);
           }}
         />
 
-        <button type="submit" id="submitLogin" onClick={HandleSubmit}>
-          Zaloguj się
+        <button type="submit" id="submitRegister" onClick={HandleSubmit}>
+          Zarejestruj się
         </button>
-        <div className="errorLogin">
-          <p>{sendMessage}</p>
-        </div>
-        <Link to="/register">nie masz konta ?</Link>
       </fieldset>
     </div>
   );
 };
-export default LoginForm;
+export default RegisterForm;
