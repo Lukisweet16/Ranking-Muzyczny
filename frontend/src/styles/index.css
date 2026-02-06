@@ -1,29 +1,149 @@
-body,
-#root {
-  height: 100vh;
+/* index.css */
+:root {
+  /* Kolory bazowe - Deep Dark */
+  --bg-app: #050505;
+  --glass-bg: rgba(255, 255, 255, 0.03);
+  --glass-bg-hover: rgba(255, 255, 255, 0.07);
+  --glass-border: rgba(255, 255, 255, 0.08);
+
+  /* Tekst */
+  --text-main: #ffffff;
+  --text-dim: #888888;
+
+  /* Apple Design System */
+  --radius-xl: 32px; /* Bloki główne */
+  --radius-md: 12px; /* Okładki i przyciski */
+  --shadow-soft: 0 20px 40px rgba(0, 0, 0, 0.6);
+  --font-apple:
+    -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
+}
+
+body {
   margin: 0;
-
+  background-color: var(--bg-app);
+  color: var(--text-main);
+  font-family: var(--font-apple);
   -webkit-font-smoothing: antialiased;
-  background: #1a1e23;
-}
-* {
-  font-family: "Lato", sans-serif;
+  min-height: 100vh;
 }
 
-.Layout {
-  min-height: 100%;
+/* --- Tło Ambientowe --- */
+.ambient-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  filter: blur(100px) brightness(0.3); /* Mocne rozmycie i przyciemnienie */
+  transition: background-image 1.2s ease-in-out;
+}
+
+/* --- Układ Główny --- */
+.content-wrapper {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 20px;
   display: flex;
   flex-direction: column;
+  gap: 32px; /* Odstęp między blokami Bento */
 }
 
-main {
-  flex: 2;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
+/* --- Komponenty Layoutu (Bloki Bento) --- */
+.layout-section-main,
+.layout-section-stats,
+.layout-section-secondary {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-soft);
+  padding: 30px;
+  width: 100%;
+  box-sizing: border-box;
 }
-footer {
+
+/* --- Sekcja Piosenek (Karty) --- */
+.songs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 20px;
+  padding: 10px 0;
+}
+
+/* Karta piosenki - układ PIONOWY */
+.song-card {
   display: flex;
-  justify-content: center;
-  color: white;
+  flex-direction: column; /* Wszystko w kolumnie */
+  align-items: center; /* Dosunięte do środka */
+  padding: 16px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 24px; /* Zaokrąglone krawędzie Apple style */
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.song-card:hover {
+  background: var(--glass-bg-hover);
+  transform: translateY(-5px); /* Delikatne uniesienie */
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Okładka w układzie pionowym */
+.song-card img {
+  width: 100%; /* Rozciąga się na całą szerokość karty */
+  aspect-ratio: 1 / 1; /* Zawsze idealny kwadrat */
+  border-radius: 16px;
+  object-fit: cover;
+  margin-bottom: 12px; /* Odstęp pod obrazkiem */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+/* Opis pod obrazkiem */
+.song-card-info {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.song-card-title {
+  display: block;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--text-main);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; /* Skracanie długich tytułów (...) */
+}
+
+.song-card-artist {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  margin-bottom: 8px;
+}
+
+/* Meta dane (np. czas trwania) na dole paska */
+.song-card-meta {
+  font-family: "SF Mono", monospace;
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  opacity: 0.7;
+}
+
+/* Nagłówki sekcji */
+.section-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 24px;
+  letter-spacing: -0.02em;
 }

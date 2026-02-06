@@ -1,10 +1,10 @@
-import React, { lazy, Suspense } from "react";
+import React, { Suspense } from "react";
 import ReactDOM from "react-dom/client";
 import "./styles/index.css";
 import Layout from "./Common_Components/Layout";
 import reportWebVitals from "./reportWebVitals";
-import LeftAsideAccountInfo from "./Main_Components/LeftAside";
-import TestForm from "./test/FormTestApi";
+import Leaderboard from "./Leaderboard_Components/leaderboard";
+import MainLogic from "./Main_Components/MainLogic";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import LoginForm from "./Login_Components/LoginForm";
 import Loading from "./Common_Components/Loading";
@@ -18,15 +18,23 @@ root.render(
           path="/"
           element={
             <Layout>
-              <Layout.Left>
-                <LeftAsideAccountInfo />
-              </Layout.Left>
-              <Layout.Main></Layout.Main>
+              <Layout.Main>
+                <MainLogic />
+              </Layout.Main>
               <Layout.Right></Layout.Right>
             </Layout>
           }
         />
-        <Route path="/leaderboard" element={<Layout></Layout>}></Route>
+        <Route
+          path="/leaderboard"
+          element={
+            <Layout>
+              <Layout.Main>
+                <Leaderboard />
+              </Layout.Main>
+            </Layout>
+          }
+        ></Route>
         <Route
           path="/login"
           element={
@@ -43,13 +51,15 @@ root.render(
           path="/register"
           element={
             <Layout>
-              <RegisterForm />
+              <Layout.Main>
+                <RegisterForm />
+              </Layout.Main>
             </Layout>
           }
         ></Route>
       </Routes>
     </Router>
-  </React.StrictMode>
+  </React.StrictMode>,
 );
 
 // If you want to start measuring performance in your app, pass a function

@@ -3,7 +3,7 @@ import pool from "../db/index.js";
 import jwt from "jsonwebtoken";
 const Login = async (req, res) => {
   const { Email, Password } = req.body;
-
+  console.log(Email, Password);
   if (!Email || !Password) {
     return res.status(401).json({
       message: "brak odpowiednich danych",
@@ -13,6 +13,7 @@ const Login = async (req, res) => {
       const result = await pool.query("select * from users where email=$1", [
         Email,
       ]);
+
       if (result.rowCount === 0) {
         return res.status(401).json({
           message: "nie ma takiego uzytkownika",
@@ -29,16 +30,17 @@ const Login = async (req, res) => {
         {
           userId: userData.id,
           userEmail: userData.email,
-          userCity: userData.city,
+          userName: userData.user_name,
         },
         process.env.JWT_SECRET,
-        { expiresIn: "8h" }
+        { expiresIn: "8h" },
       );
       res.cookie("token", jwtToken, {
         httpOnly: true,
         sameSite: "strict",
         maxAge: 1000 * 60 * 60 * 8,
       });
+
       return res.status(200).json({
         message: "zalogowano sie ",
       });

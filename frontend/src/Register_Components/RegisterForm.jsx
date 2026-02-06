@@ -5,14 +5,20 @@ import "../styles/Form.css";
 const RegisterForm = () => {
   const [Email, setEmail] = useState("");
   const [Password, setPassword] = useState("");
+  const [City, setCity] = useState("");
+  const [ReapetPassword, setReapetPassword] = useState("");
   const [sendMessage, setSendMessage] = useState("");
-  const HandleRegisterData = async (res) => {
-    localStorage.setItem("token", res.token);
-    localStorage.setItem("userId", res.userId);
-    localStorage.setItem("userEmail", res.userEmail);
-  };
+
   const HandleSubmit = async () => {
     try {
+      if (!Email || !Password || !ReapetPassword) {
+        setSendMessage("uzupełnij wszystkie pola");
+        throw new Error("uzupełnij wszystkie pola");
+      }
+      if (Password !== ReapetPassword) {
+        setSendMessage("hasla nie sa takie same");
+        throw new Error("hasla nie sa takie same");
+      }
       const response = await fetch("/register", {
         method: "POST",
         headers: {
@@ -33,7 +39,7 @@ const RegisterForm = () => {
         alert("zarejstrowano sie pomyslnie");
       }
     } catch (err) {
-      setSendMessage(`${err} - cos poszlo nie tak`);
+      setSendMessage(`${err}`);
     } finally {
       setTimeout(() => {
         setSendMessage("");
@@ -42,11 +48,11 @@ const RegisterForm = () => {
   };
   return (
     <div className="RegisterForm">
-      <div className="errorRegister">
-        <p>{sendMessage}</p>
-      </div>
       <fieldset>
-        <h1>Zaloguj się</h1>
+        <div className="errorRegister">
+          <p>{sendMessage}</p>
+        </div>
+        <h1>Zarejestruj się</h1>
 
         <label htmlFor="emailRegister">E-mail</label>
         <input
@@ -66,6 +72,16 @@ const RegisterForm = () => {
           value={Password}
           onChange={(e) => {
             setPassword(e.target.value);
+          }}
+        />
+        <label htmlFor="passwordRegisterReapet">powtórz haslo</label>
+        <input
+          type="password"
+          name="passwordRegisterReapet"
+          id="passwordRegisterReapet"
+          value={ReapetPassword}
+          onChange={(e) => {
+            setReapetPassword(e.target.value);
           }}
         />
 

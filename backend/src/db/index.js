@@ -4,5 +4,10 @@ configDotenv();
 const pool = new Pool({
   client_encoding: 'utf8'
 });
+pool.query("select NOW()").then(res => {
+  console.log("Database connected:", res.rows[0]);
+}).catch(err => {
+  console.error("Database connection error:", err);
+});
 
 export default pool;

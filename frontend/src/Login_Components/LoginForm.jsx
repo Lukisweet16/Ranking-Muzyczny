@@ -1,24 +1,20 @@
 import { useCallback, useState } from "react";
 
 import "../styles/Form.css";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 
 const LoginForm = () => {
   const [Email, setEmail] = useState("");
   const [Password, setPassword] = useState("");
   const [sendMessage, setSendMessage] = useState("");
-  const HandleLoginData = async (res) => {
-    localStorage.setItem("token", res.token);
-    localStorage.setItem("userId", res.userId);
-    localStorage.setItem("userEmail", res.userEmail);
-  };
+  
   const HandleSubmit = async () => {
     try {
       const response = await fetch("/login", {
         method: "POST",
         headers: {
           "content-type": "application/json",
-        },
+        },credentials: 'include',
         body: JSON.stringify({
           Email,
           Password,
@@ -30,10 +26,12 @@ const LoginForm = () => {
       if (!response.ok) {
         throw new Error(data.message || "bład servera");
       } else {
-        HandleLoginData(data);
+        alert("zalogowano pomyślnie");
+      
+      Navigate("/")
       }
     } catch (err) {
-      setSendMessage(`${err} - cos poszlo nie tak`);
+      setSendMessage(`${err} `);
     } finally {
       setTimeout(() => {
         setSendMessage("");

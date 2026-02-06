@@ -1,0 +1,159 @@
+
+
+/* Karty (Dla Rankingu i Statystyk) */
+.glass-card {
+  background: var(--bg-surface);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  backdrop-filter: blur(10px);
+}
+
+.glass-card h2 {
+  margin-top: 0;
+  font-size: 1.5rem;
+  margin-bottom: 24px;
+  font-weight: 600;
+}
+
+/* Statystyki - Stonowane kolory */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.stat-item {
+  background: rgba(0,0,0,0.2);
+  padding: 20px;
+  border-radius: var(--radius-md);
+  text-align: left;
+}
+
+.stat-label {
+  display: block;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.stat-value {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+/* Kontener na przyciski (żeby były obok siebie) */
+.vote-actions {
+  display: flex;
+  flex-direction: row-reverse;
+  gap: 16px; /* Odstęp między przyciskami */
+  align-items: center;
+  margin-top: 16px;
+}
+
+/* Wspólne style bazowe */
+.up-vote, .down-vote {
+  border: none;
+  border-radius: 50px; /* Kształt pigułki (capsule) */
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 700;
+  color: white;
+  cursor: pointer;
+  
+  display: flex;
+  
+  align-items: center;
+  justify-content: center;
+  gap: 8px; /* Odstęp jeśli dodasz ikonkę */
+  
+  /* Płynna animacja wszystkich zmian */
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); /* Efekt sprężyny */
+  
+  /* Domyślnie brak obrysu po kliknięciu */
+  outline: none;
+  position: relative;
+  overflow: hidden;
+}
+
+/* --- UP VOTE (Zielony) --- */
+.up-vote {
+  /* Soczysta zieleń w stylu iOS */
+  background: linear-gradient(135deg, #30d158 0%, #20c946 100%);
+  
+  /* Zielona poświata */
+  box-shadow: 0 4px 15px rgba(48, 209, 88, 0.3);
+}
+
+.up-vote:hover {
+  /* Uniesienie i mocniejszy blask */
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 25px rgba(48, 209, 88, 0.5);
+}
+
+.up-vote:active {
+  /* Efekt wciśnięcia */
+  transform: scale(0.92);
+  filter: brightness(0.9);
+}
+
+/* --- DOWN VOTE (Czerwony) --- */
+.down-vote {
+  /* Głęboka czerń zmieszana z czerwienią (lub czysta czerwień - tu wersja Apple Red) */
+  background: linear-gradient(135deg, #ff453a 0%, #ff3b30 100%);
+  
+  /* Czerwona poświata */
+  box-shadow: 0 4px 15px rgba(255, 69, 58, 0.3);
+}
+
+.down-vote:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 25px rgba(255, 69, 58, 0.5);
+}
+
+.down-vote:active {
+  transform: scale(0.92);
+  filter: brightness(0.9);
+}
+
+/* Opcjonalnie: Ikony wewnątrz przycisków */
+.up-vote svg, .down-vote svg {
+  width: 18px;
+  height: 18px;
+  fill: currentColor; /* Ikona przejmie kolor tekstu (biały) */
+  transition: transform 0.2s;
+}
+
+/* Mikro-animacja ikony przy najechaniu */
+.up-vote:hover svg {
+  transform: translateY(-2px); /* Strzałka idzie w górę */
+}
+
+.down-vote:hover svg {
+  transform: translateY(2px); /* Strzałka idzie w dół */
+}
+.icon-svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0; /* Zapobiega zgniataniu ikony */
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Animacja ikony w górę dla up-vote */
+.up-vote:hover .icon-svg {
+  transform: translateY(-2px);
+}
+
+/* Animacja ikony w dół dla down-vote */
+.down-vote:hover .icon-svg {
+  transform: translateY(2px);
+}
+
+/* Ustawienie tekstu i ikony w jednej linii */
+.up-vote, .down-vote {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
