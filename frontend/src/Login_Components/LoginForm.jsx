@@ -1,20 +1,22 @@
-import { useCallback, useState } from "react";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 import "../styles/Form.css";
-import { Link, Navigate } from "react-router-dom";
 
 const LoginForm = () => {
+  const navigate = useNavigate();
   const [Email, setEmail] = useState("");
   const [Password, setPassword] = useState("");
   const [sendMessage, setSendMessage] = useState("");
-  
+
   const HandleSubmit = async () => {
     try {
       const response = await fetch("/login", {
         method: "POST",
         headers: {
           "content-type": "application/json",
-        },credentials: 'include',
+        },
+        credentials: "include",
         body: JSON.stringify({
           Email,
           Password,
@@ -27,8 +29,7 @@ const LoginForm = () => {
         throw new Error(data.message || "bład servera");
       } else {
         alert("zalogowano pomyślnie");
-      
-      Navigate("/")
+        navigate("/");
       }
     } catch (err) {
       setSendMessage(`${err} `);

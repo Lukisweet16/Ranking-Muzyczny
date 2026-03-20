@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
+import "../styles/leaderboard.css";
 
-const test = async () => {
+const fetchLeaderboardData = async () => {
   try {
     const response = await fetch("/leaderboard", { method: "POST" });
     const data = await response.json();
@@ -10,23 +11,37 @@ const test = async () => {
   }
 };
 const ShowLeaderboard = () => {
-  const [trackLeaderboard, setTrackLeaderboard] = useState([]);
+  const [trackLeaderboard, setTrackLeaderboard] = useState([{}]);
   useEffect(() => {
     const fetchLeaderboard = async () => {
-      const data = await test();
+      const data = (await fetchLeaderboardData()) || [{}];
       setTrackLeaderboard(data);
     };
     fetchLeaderboard();
   }, []);
 
   return (
-    <div>
-      {trackLeaderboard.map((track) => (
-        <div key={track.id}>
-          {track.title} - {track.author}{" "}
-          <img src={track.img} alt={track.title} /> ilosc głosów : {track.votes}
-        </div>
-      ))}
+    <div className="leaderboard-container">
+      <h2 className="leaderboard-title">Top Wybory</h2>
+      <div className="leaderboard-list">
+        {trackLeaderboard.map((track) => (
+          <div key={track.id} className="leaderboard-item">
+            <span className="rank-number">{}</span>
+
+            <img src={track.img} alt={track.title} className="track-thumb" />
+
+            <div className="track-details">
+              <span className="track-name">{track.title}</span>
+              <span className="track-author">{track.author}</span>
+            </div>
+
+            <div className="vote-badge">
+              <span className="vote-count">{track.votes}</span>
+              <span className="vote-label">głosów</span>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

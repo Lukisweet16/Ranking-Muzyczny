@@ -1,18 +1,28 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "../styles/components.css";
 const MainLogic = () => {
   const [tracks, setTracks] = useState([]);
+  const navigate = useNavigate();
 
   const fetchTracks = async () => {
     try {
-      const response = await fetch("/chart/tracks", { method: "GET" });
-      const data = await response.json();
+      const response = await fetch("/chart/tracks", {
+        method: "GET",
+        credentials: "include",
+      });
 
+      if (response.status === 401) {
+        navigate("/login");
+      }
+
+      const data = await response.json();
       setTracks(data);
     } catch (error) {
-      console.log("Error fetching tracks:", error);
+      console.log("Error occured while fetching tracks:", error);
     }
   };
+
   useEffect(() => {
     fetchTracks();
   }, []);
@@ -29,14 +39,20 @@ const MainLogic = () => {
           upVote: isUpVote,
         }),
       });
+      if (response.status === 401) {
+        navigate("/login");
+      }
+
       const data = await response.json();
       if (!response.ok) {
-        throw new Error(data.message || "bład servera");
+        console.error(data.message || "bład servera");
+        fetchTracks();
       } else {
         fetchTracks();
       }
     } catch (err) {
-      alert("wystapił problem : " + err);
+      alert(err.message || "Błąd podczas głosowania, spróbuj ponownie");
+      console.error("Error during voting:", err);
     }
   };
   // return <div>

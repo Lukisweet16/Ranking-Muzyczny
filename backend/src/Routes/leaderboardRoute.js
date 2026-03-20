@@ -1,5 +1,5 @@
 import express from "express";
-import { sendLeaderboard } from "../controllers/leaderboard.Controller.js";
+import { sendLeaderboard } from "../controllers/leaderboardController.js";
 const router = express.Router();
 
 router.post("/leaderboard", sendLeaderboard);

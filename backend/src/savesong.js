@@ -1,19 +1,15 @@
-import pool from "./src/db/index.js";
+import pool from "./db/index.js";
 
 export const saveSong = async (TrackObject) => {
   if (!TrackObject || !TrackObject.id) {
-    console.warn("saveSong: invalid TrackObject:", TrackObject);
-    return;
+    throw new Error("error saving song invalid track" + TrackObject);
   }
-
   try {
     const id = TrackObject.id;
     const result = await pool.query("SELECT * FROM songs WHERE id = $1", [id]);
-    console.log(id);
 
     if (result.rowCount > 0) {
       console.log("Song already saved");
-      return;
     }
 
     const title = TrackObject.title;
@@ -24,6 +20,6 @@ export const saveSong = async (TrackObject) => {
       [id, title, author],
     );
   } catch (err) {
-    console.error("saveSong error:", err);
+    throw new Error("error with saving songs : " + err.message);
   }
 };

@@ -8,14 +8,5 @@ App.use(
   }),
 );
 App.use(express.json());
-App.get("/test-auth", auth, (req, res) => {
-  res.json({
-    message: "Middleware działa 🎉",
-    user: req.user,
-  });
-});
-App.get("/debug", (req, res) => {
-  res.json(req.headers);
-});
 
 export default App;

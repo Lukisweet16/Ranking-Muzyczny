@@ -15,20 +15,18 @@ export const sendLeaderboard = async (req, res) => {
     const top10TableId = await pool.query(
       "Select count(song_id),song_id from votes group by song_id order by count(song_id) desc limit 10;",
     );
-    console.log(top10TableId.rows);
-    console.log(await getSong(top10TableId.rows[0].song_id));
     const top10TableJson = top10TableId.rows.map(async (row) => {
       const songData = await getSong(row.song_id);
       return {
         id: songData.id,
         title: songData.title,
-        img: songData.album?.cover_medium,
+        img: songData.album?.cover_small,
         author: songData.artist?.name,
         votes: row.count,
       };
     });
 
-    const resolvedTop10TableJson = await Promise.all(top10TableJson);
+    const resolvedTop10TableJson = await Promise.all(top10TableJson); //Promise.all heer because of all promises in row 18 in map
     res.status(200).json(resolvedTop10TableJson);
   } catch (err) {
     console.error("sendLeaderboard error:", err);
